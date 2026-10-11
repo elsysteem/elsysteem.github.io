@@ -51,7 +51,7 @@
       display: flex;
       flex-direction: column;
       background: var(--page-bg);
-      overflow: hidden;
+      position: relative;
     }
 
     /* --- Header Styles --- */
@@ -177,7 +177,7 @@
 
     /* --- Card Area --- */
     .card-area {
-      flex: 1; padding: 12px 11px 16px; display: flex; flex-direction: column;
+      flex: 1; padding: 12px 11px 80px; display: flex; flex-direction: column; /* 80px مسافة لحماية المحتوى من الشريط السفلي المثبت */
     }
     .full-card-container {
       overflow: hidden; background: #fff; border-radius: 18px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -208,10 +208,23 @@
 
     .card-footer-section { height: 31px; background: var(--blue-deep); }
 
-    /* --- Bottom Nav --- */
+    /* --- Bottom Nav (تثبيت دائم في أسفل الشاشة) --- */
     .bottom-nav {
-      min-height: 66px; display: flex; align-items: center; justify-content: space-around;
-      padding: 5px 13px; background: #fff; border-top: 1px solid var(--line); margin-top: auto;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      z-index: 999;
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 5px 13px;
+      background: #fff;
+      border-top: 1px solid var(--line);
     }
     .nav-item {
       width: 54px; height: 52px; display: grid; place-items: center; border: 0;
@@ -331,144 +344,3 @@
         <i class="fab fa-android" aria-hidden="true"></i>
         <span>حمل التطبيق الآن</span>
       </div>
-      <button class="download-btn" type="button" onclick="window.location.href='offline.html'">أضغط هنا</button>
-    </section>
-
-    <!-- Card Area -->
-    <section class="card-area">
-      <article class="full-card-container" aria-label="البطاقة الرقمية">
-        <div class="id-card">
-          <div class="card-header-section">
-            <img src="logo.jpg" alt="شعار المعهد" class="card-header-logo">
-            <span class="card-header-text">إدارة ونظم المعلومات بالمصرية للعلوم والتكنولوجيا</span>
-          </div>
-
-          <div class="student-info">
-            <div class="student-photo-container">
-              <img src="personal-photo.jpg" alt="الصورة الشخصية للطالب" class="student-photo">
-              <div class="academic-year">2025-2026</div>
-            </div>
-
-            <div class="text-info">
-              <div class="student-name">اسلام خالد عبدالله محمد</div>
-              <div class="student-details">23-0221916559<br>نظم معلومات، فرقة ثالثة</div>
-            </div>
-          </div>
-
-          <div class="numbers-section">
-            <div class="id-number">ID: 30304122402219</div>
-            <div class="live-date" id="dateDisplay" aria-label="التاريخ الحالي"></div>
-            <div class="live-time" id="timeDisplay" aria-label="الوقت الحالي"></div>
-          </div>
-
-          <div class="card-footer-section"></div>
-        </div>
-      </article>
-    </section>
-
-    <!-- Bottom Nav -->
-    <nav class="bottom-nav" aria-label="التنقل السفلي">
-      <a href="index.html" class="nav-item active">
-        <i class="fas fa-home" aria-hidden="true"></i>
-      </a>
-      <a href="works.html" class="nav-item">
-        <i class="fas fa-users" aria-hidden="true"></i>
-      </a>
-      <a href="notifications.html" class="nav-item">
-        <i class="fas fa-bell" aria-hidden="true"></i>
-      </a>
-      <a href="more.html" class="nav-item">
-        <i class="fas fa-bars" aria-hidden="true"></i>
-      </a>
-    </nav>
-  </main>
-
-  <script>
-    // 1. Clock Logic
-    function getCairoDateParts() {
-      const parts = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Africa/Cairo",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-      }).formatToParts(new Date());
-
-      return parts.reduce(function (result, part) {
-        if (part.type !== "literal") {
-          result[part.type] = part.value;
-        }
-        return result;
-      }, {});
-    }
-
-    function updateClock() {
-      const date = getCairoDateParts();
-      document.getElementById("dateDisplay").textContent = date.year + "-" + date.month + "-" + date.day;
-      document.getElementById("timeDisplay").textContent = date.hour + ":" + date.minute + ":" + date.second;
-    }
-
-    updateClock();
-    window.setInterval(updateClock, 1000);
-
-    // 2. Dropdowns Logic
-    function closeAllDropdowns() {
-      const userDrop = document.getElementById("userDropdown");
-      const searchDrop = document.getElementById("searchDropdown");
-      const notifDrop = document.getElementById("notifDropdown");
-      
-      if(userDrop) userDrop.classList.remove("active");
-      if(searchDrop) searchDrop.classList.remove("active");
-      if(notifDrop) notifDrop.classList.remove("active");
-    }
-
-    function toggleDropdown() {
-      const drop = document.getElementById("userDropdown");
-      const isActive = drop.classList.contains("active");
-      closeAllDropdowns();
-      if(!isActive) drop.classList.add("active");
-    }
-
-    function toggleSearch() {
-      const drop = document.getElementById("searchDropdown");
-      const isActive = drop.classList.contains("active");
-      closeAllDropdowns();
-      if(!isActive) drop.classList.add("active");
-    }
-
-    function toggleNotif() {
-      const drop = document.getElementById("notifDropdown");
-      const isActive = drop.classList.contains("active");
-      closeAllDropdowns();
-      if(!isActive) drop.classList.add("active");
-    }
-
-    document.addEventListener("click", function(event) {
-      const userBtn = document.getElementById("dropdownBtn");
-      const searchBtn = document.getElementById("searchBtn");
-      const notifBtn = document.getElementById("notifBtn");
-      
-      const userDrop = document.getElementById("userDropdown");
-      const searchDrop = document.getElementById("searchDropdown");
-      const notifDrop = document.getElementById("notifDropdown");
-
-      let clickedInsideDrop = false;
-      if(userDrop && userDrop.contains(event.target)) clickedInsideDrop = true;
-      if(searchDrop && searchDrop.contains(event.target)) clickedInsideDrop = true;
-      if(notifDrop && notifDrop.contains(event.target)) clickedInsideDrop = true;
-
-      let clickedBtn = false;
-      if(userBtn && userBtn.contains(event.target)) clickedBtn = true;
-      if(searchBtn && searchBtn.contains(event.target)) clickedBtn = true;
-      if(notifBtn && notifBtn.contains(event.target)) clickedBtn = true;
-
-      if(!clickedInsideDrop && !clickedBtn) {
-         closeAllDropdowns();
-      }
-    });
-  </script>
-</body>
-</html>
