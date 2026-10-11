@@ -3,224 +3,328 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>البطاقة الرقمية</title>
+  <title>elsystem</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     body {
-      background-color: #f4f6f9;
-      color: #333;
-      /* مسافات علوية وسفلية لحماية المحتوى من الاختفاء خلف الأشرطة الثابتة */
-      padding-top: 70px;
-      padding-bottom: 75px;
+      background-color: #7baee3;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 14px 85px 14px; /* مسافة سفلية حتى لا يغطي الشريط السفلي على بيانات البطاقة */
+      overflow-x: hidden;
     }
 
-    /* الشريط العلوي الثابت */
-    .top-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    /* الشريط العلوي الأصلي */
+    .header-bar {
+      width: 100%;
+      max-width: 390px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
-      z-index: 1000;
+      margin-bottom: 12px;
     }
 
-    .top-header .app-download-btn {
-      background-color: #0056b3;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-black {
+      background-color: #000000;
       color: #ffffff;
       border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
+      padding: 6px 14px;
+      border-radius: 6px;
       font-size: 13px;
       font-weight: bold;
-      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-round-btn {
+      width: 34px;
+      height: 34px;
+      background: #e2e8f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      position: relative;
+    }
+
+    .icon-round-btn i {
+      font-size: 15px;
+    }
+
+    .red-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      background-color: #ef4444;
+      border-radius: 50%;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    /* رابط التحميل العلوي */
+    .download-link {
+      width: 100%;
+      max-width: 390px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 14px;
       text-decoration: none;
     }
 
-    .top-header .sys-logo {
-      height: 38px;
+    .download-link i {
+      font-size: 16px;
     }
 
-    /* حاوية المحتوى القابل للتمرير */
-    .content-container {
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 15px;
-    }
-
-    /* بطاقة الهوية الرقمية */
-    .id-card {
-      background: linear-gradient(135deg, #1b6ca8, #074770);
-      border-radius: 18px;
-      padding: 20px;
+    /* كارت الطالب الأصلي */
+    .card-box {
+      width: 100%;
+      max-width: 390px;
+      background-color: #4b89dc;
+      border-radius: 20px;
+      padding: 16px;
       color: #ffffff;
-      box-shadow: 0 8px 24px rgba(7, 71, 112, 0.25);
-      position: relative;
-      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .card-institution {
+    .institute-title {
+      background-color: #216bbd;
+      padding: 7px 12px;
+      border-radius: 8px;
       font-size: 13px;
       font-weight: bold;
-      background-color: rgba(255, 255, 255, 0.15);
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 8px;
+      text-align: center;
+      width: 100%;
       margin-bottom: 16px;
     }
 
-    .card-profile-section {
+    .card-middle {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
-    .card-user-info h2 {
-      font-size: 19px;
-      font-weight: bold;
-      margin-bottom: 8px;
+    .student-data {
+      flex: 1;
+      text-align: right;
+    }
+
+    .student-data h2 {
+      font-size: 20px;
+      font-weight: 800;
       line-height: 1.3;
+      margin-bottom: 8px;
     }
 
-    .card-user-info .sub-detail {
+    .student-data p {
       font-size: 13px;
-      opacity: 0.9;
       margin-bottom: 4px;
+      opacity: 0.95;
     }
 
-    .profile-photo-wrapper {
-      width: 85px;
-      height: 105px;
-      border-radius: 10px;
+    .photo-container {
+      width: 82px;
+      height: 104px;
       border: 3px solid #ffffff;
+      border-radius: 8px;
       overflow: hidden;
       flex-shrink: 0;
-      background-color: #ffffff;
+      background-color: #1e293b;
+      position: relative;
     }
 
-    .profile-photo-wrapper img {
+    .photo-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
-    .card-footer-info {
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-    }
-
-    .id-badge {
-      font-size: 14px;
-      letter-spacing: 1px;
+    .year-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      font-size: 9px;
+      text-align: center;
+      padding: 2px 0;
       font-weight: bold;
     }
 
-    /* الشريط السفلي الثابت */
-    .bottom-nav {
+    .card-bottom {
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      padding-top: 14px;
+    }
+
+    .nat-id {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .card-date {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      direction: ltr;
+    }
+
+    .card-clock {
+      font-size: 18px;
+      font-weight: 800;
+      direction: ltr;
+    }
+
+    /* الشريط السفلي الأصلي (مثبت فقط) */
+    .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 65px;
-      background-color: #ffffff;
-      border-top: 1px solid #e0e0e0;
+      width: 100%;
+      height: 60px;
+      background-color: #f8fafc;
+      border-top: 1px solid #cbd5e1;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 1000;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      z-index: 9999;
     }
 
-    .nav-item {
+    .bottom-btn {
+      color: #94a3b8;
+      font-size: 20px;
+      text-decoration: none;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #666;
-      text-decoration: none;
-      font-size: 11px;
-      gap: 4px;
+      width: 25%;
+      height: 100%;
     }
 
-    .nav-item i {
-      font-size: 20px;
-    }
-
-    .nav-item.active {
-      color: #0056b3;
+    .bottom-btn.active {
+      color: #334155;
     }
   </style>
 </head>
 <body>
 
-  <!-- شريط علوي مثبت -->
-  <header class="top-header">
-    <a href="offline.html" class="app-download-btn">حمّل التطبيق الآن</a>
-    <img src="sys_logo.png" alt="شعار النظام" class="sys-logo" onerror="this.style.display='none'">
-  </header>
-
-  <!-- المحتوى القابل للتمرير -->
-  <main class="content-container">
-    <section class="id-card">
-      <div class="card-institution">إدارة ونظم المعلومات بالمصرية للعلوم والتكنولوجيا</div>
-
-      <div class="card-profile-section">
-        <div class="card-user-info">
-          <h2>إسلام خالد عبدالله محمد</h2>
-          <div class="sub-detail">كود الطالب: 23-0221916559</div>
-          <div class="sub-detail">نظم معلومات - فرقة ثالثة</div>
+  <!-- الجزء العلوي -->
+  <div class="header-bar">
+    <div class="header-left">
+      <a href="offline.html" class="btn-black">اضغط هنا</a>
+      <div class="header-actions">
+        <div class="icon-round-btn">
+          <i class="fa-solid fa-bell"></i>
+          <span class="red-dot"></span>
         </div>
-
-        <div class="profile-photo-wrapper">
-          <img src="personal-photo.jpg" alt="الصورة الشخصية" onerror="this.src='logo.jpg'">
+        <div class="icon-round-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
         </div>
       </div>
+    </div>
+    <img src="sys_logo.png" alt="Logo" class="logo-img" onerror="this.src='logo.jpg'">
+  </div>
 
-      <div class="card-footer-info">
-        <span class="id-badge">ID: 30304122402219</span>
-        <span>العام: 2025 - 2026</span>
+  <!-- رابط التحميل -->
+  <a href="offline.html" class="download-link">
+    <span>حمل التطبيق الآن</span>
+    <i class="fa-solid fa-arrow-down-to-bracket"></i>
+  </a>
+
+  <!-- بطاقة الطالب -->
+  <div class="card-box">
+    <div class="institute-title">إدارة ونظم المعلومات بالمصرية للعلوم والتكنولوجيا</div>
+
+    <div class="card-middle">
+      <div class="student-data">
+        <h2>إسلام خالد عبدالله محمد</h2>
+        <p>23-0221916559</p>
+        <p>نظم معلومات، فرقة ثالثة</p>
       </div>
-    </section>
-  </main>
 
-  <!-- شريط التنقل السفلي المثبت -->
-  <nav class="bottom-nav">
-    <a href="#" class="nav-item active">
-      <i class="fa-solid fa-house"></i>
-      <span>الرئيسية</span>
-    </a>
-    <a href="#" class="nav-item">
-      <i class="fa-solid fa-id-card"></i>
-      <span>البطاقة</span>
-    </a>
-    <a href="#" class="nav-item">
-      <i class="fa-solid fa-bell"></i>
-      <span>الإشعارات</span>
-    </a>
-    <a href="#" class="nav-item">
-      <i class="fa-solid fa-user"></i>
-      <span>حسابي</span>
-    </a>
-  </nav>
+      <div class="photo-container">
+        <img src="personal-photo.jpg" alt="صورة الطالب" onerror="this.src='logo.jpg'">
+        <div class="year-strip">2025-2026</div>
+      </div>
+    </div>
 
+    <div class="card-bottom">
+      <div><span class="nat-id">ID: 30304122402219</span></div>
+      <div id="liveDate" class="card-date">2026-10-11</div>
+      <div id="liveTime" class="card-clock">07:10:44</div>
+    </div>
+  </div>
+
+  <!-- الشريط السفلي الثابت في مكانه -->
+  <div class="bottom-bar">
+    <a href="#" class="bottom-btn"><i class="fa-solid fa-users"></i></a>
+    <a href="#" class="bottom-btn"><i class="fa-solid fa-bell"></i></a>
+    <a href="#" class="bottom-btn active"><i class="fa-solid fa-house"></i></a>
+    <a href="#" class="bottom-btn"><i class="fa-solid fa-bars"></i></a>
+  </div>
+
+  <script>
+    function runLiveClock() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      document.getElementById('liveDate').textContent = `${year}-${month}-${day}`;
+      document.getElementById('liveTime').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(runLiveClock, 1000);
+    runLiveClock();
+  </script>
 </body>
 </html>
