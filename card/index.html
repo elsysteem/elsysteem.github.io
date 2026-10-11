@@ -136,9 +136,7 @@
       direction: rtl;
     }
 
-    .dropdown-menu.active {
-      display: flex;
-    }
+    .dropdown-menu.active { display: flex; }
 
     .dropdown-profile {
       display: flex;
@@ -190,14 +188,8 @@
       text-decoration: none;
     }
 
-    .dropdown-item:active {
-      background: #f5f5f5;
-    }
-
-    .dropdown-item i {
-      font-size: 18px;
-      color: #666;
-    }
+    .dropdown-item:active { background: #f5f5f5; }
+    .dropdown-item i { font-size: 18px; color: #666; }
 
     /* --- Search Dropdown --- */
     .search-dropdown {
@@ -215,9 +207,7 @@
       direction: rtl;
     }
 
-    .search-dropdown.active {
-      display: flex;
-    }
+    .search-dropdown.active { display: flex; }
 
     .search-input-wrapper {
       display: flex;
@@ -237,19 +227,9 @@
       background: transparent;
     }
 
-    .search-input-wrapper input::placeholder {
-      color: #888;
-    }
-
-    .search-icon-inside {
-      color: #555;
-      font-size: 16px;
-    }
-
-    .search-caret {
-      color: #555;
-      font-size: 12px;
-    }
+    .search-input-wrapper input::placeholder { color: #888; }
+    .search-icon-inside { color: #555; font-size: 16px; }
+    .search-caret { color: #555; font-size: 12px; }
 
     /* --- Notifications --- */
     .notif-dropdown {
@@ -268,9 +248,7 @@
       direction: rtl;
     }
 
-    .notif-dropdown.active {
-      display: flex;
-    }
+    .notif-dropdown.active { display: flex; }
 
     .notif-header {
       padding: 15px;
@@ -521,7 +499,7 @@
       background: #307ef1;
     }
 
-    /* White Box - Adjusted Height */
+    /* White Box */
     .card-bottom-white {
       height: 90px;
       background: #fff;
@@ -563,13 +541,8 @@
     }
 
     @media (min-width: 421px) {
-      body {
-        background: #d6d6d6;
-      }
-
-      .mobile-container {
-        box-shadow: 0 0 30px rgba(0,0,0,0.08);
-      }
+      body { background: #d6d6d6; }
+      .mobile-container { box-shadow: 0 0 30px rgba(0,0,0,0.08); }
     }
 
     @media (max-width: 350px) {
@@ -593,6 +566,15 @@
         padding-top: 43px;
       }
     }
+
+    /* --- Extra Gray Scroll Space --- */
+    body::after {
+      content: "";
+      display: block;
+      height: 350px;
+      background: var(--page-bg);
+    }
+
   </style>
 </head>
 
@@ -615,7 +597,6 @@
         <div class="dropdown-menu" id="userDropdown">
           <div class="dropdown-profile">
             <img src="personal-photo.jpg" alt="Profile" class="dropdown-avatar">
-
             <div class="dropdown-profile-text">
               <span class="dropdown-name">اسلام خالد عبدالله محمد</span>
               <span class="dropdown-sub">اطلع على ملفك الشخصي</span>
@@ -855,34 +836,22 @@
     function toggleDropdown() {
       const drop = document.getElementById("userDropdown");
       const isActive = drop.classList.contains("active");
-
       closeAllDropdowns();
-
-      if(!isActive) {
-        drop.classList.add("active");
-      }
+      if(!isActive) drop.classList.add("active");
     }
 
     function toggleSearch() {
       const drop = document.getElementById("searchDropdown");
       const isActive = drop.classList.contains("active");
-
       closeAllDropdowns();
-
-      if(!isActive) {
-        drop.classList.add("active");
-      }
+      if(!isActive) drop.classList.add("active");
     }
 
     function toggleNotif() {
       const drop = document.getElementById("notifDropdown");
       const isActive = drop.classList.contains("active");
-
       closeAllDropdowns();
-
-      if(!isActive) {
-        drop.classList.add("active");
-      }
+      if(!isActive) drop.classList.add("active");
     }
 
     document.addEventListener("click", function(event) {
