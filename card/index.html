@@ -93,24 +93,6 @@
       font-size: 18px;
     }
 
-    .notification-badge {
-      position: absolute;
-      top: -6px;
-      right: -8px;
-      min-width: 24px;
-      height: 24px;
-      padding: 0 4px;
-      display: grid;
-      place-items: center;
-      border: 2px solid #fff;
-      border-radius: 999px;
-      color: #fff;
-      background: #f02f2f;
-      font-size: 11px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
     /* --- Dropdowns CSS --- */
     /* 1. قائمة المستخدم */
     .dropdown-menu {
@@ -166,18 +148,9 @@
     .notif-desc { font-size: 13px; font-weight: 600; color: #444; line-height: 1.4; margin-bottom: 6px; }
     .notif-time { font-size: 13px; color: #777; }
 
-    /* --- Download Banner --- */
-    .download-banner {
-      min-height: 44px; display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; padding: 7px 16px; color: #1f1f1f; background: #dedede; border-bottom: 1px solid #c7c7c7;
-    }
-    .download-text { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 600; white-space: nowrap; }
-    .download-text i { color: #5d5d5d; font-size: 20px; }
-    .download-btn { min-width: 78px; border: 0; border-radius: 999px; padding: 6px 15px; color: #fff; background: #000; font-size: 13px; font-weight: 700; white-space: nowrap; }
-
     /* --- Card Area --- */
     .card-area {
-      flex: 1; padding: 12px 11px 80px; display: flex; flex-direction: column; /* 80px مسافة لحماية المحتوى من الشريط السفلي المثبت */
+      flex: 1; padding: 12px 11px 80px; display: flex; flex-direction: column;
     }
     .full-card-container {
       overflow: hidden; background: #fff; border-radius: 18px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -208,7 +181,7 @@
 
     .card-footer-section { height: 31px; background: var(--blue-deep); }
 
-    /* --- Bottom Nav (تثبيت دائم في أسفل الشاشة) --- */
+    /* --- Bottom Nav (مثبت في أسفل الشاشة) --- */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -295,7 +268,6 @@
         <!-- Notifications Dropdown -->
         <button class="icon-circle" type="button" id="notifBtn" onclick="toggleNotif()">
           <i class="fas fa-bell"></i>
-          <span class="notification-badge">9+</span>
         </button>
         <div class="notif-dropdown" id="notifDropdown">
           <div class="notif-header">الإشعارات</div>
@@ -338,9 +310,141 @@
       </div>
     </header>
 
-    <!-- Download Banner -->
-    <section class="download-banner" aria-label="تحميل التطبيق">
-      <div class="download-text">
-        <i class="fab fa-android" aria-hidden="true"></i>
-        <span>حمل التطبيق الآن</span>
-      </div>
+    <!-- Card Area -->
+    <section class="card-area">
+      <article class="full-card-container" aria-label="البطاقة الرقمية">
+        <div class="id-card">
+          <div class="card-header-section">
+            <img src="logo.jpg" alt="شعار المعهد" class="card-header-logo">
+            <span class="card-header-text">إدارة ونظم المعلومات بالمصرية للعلوم والتكنولوجيا</span>
+          </div>
+
+          <div class="student-info">
+            <div class="student-photo-container">
+              <img src="personal-photo.jpg" alt="الصورة الشخصية للطالب" class="student-photo">
+              <div class="academic-year">2026-2027</div>
+            </div>
+
+            <div class="text-info">
+              <div class="student-name">اسلام خالد عبدالله محمد</div>
+              <div class="student-details">23-0221916559<br>نظم معلومات، فرقة رابعة</div>
+            </div>
+          </div>
+
+          <div class="numbers-section">
+            <div class="id-number">ID: 30304122402219</div>
+            <div class="live-date" id="dateDisplay" aria-label="التاريخ الحالي"></div>
+            <div class="live-time" id="timeDisplay" aria-label="الوقت الحالي"></div>
+          </div>
+
+          <div class="card-footer-section"></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav" aria-label="التنقل السفلي">
+      <a href="index.html" class="nav-item active">
+        <i class="fas fa-home" aria-hidden="true"></i>
+      </a>
+      <a href="works.html" class="nav-item">
+        <i class="fas fa-users" aria-hidden="true"></i>
+      </a>
+      <a href="notifications.html" class="nav-item">
+        <i class="fas fa-bell" aria-hidden="true"></i>
+      </a>
+      <a href="more.html" class="nav-item">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </a>
+    </nav>
+  </main>
+
+  <script>
+    // 1. Clock Logic
+    function getCairoDateParts() {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Africa/Cairo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).formatToParts(new Date());
+
+      return parts.reduce(function (result, part) {
+        if (part.type !== "literal") {
+          result[part.type] = part.value;
+        }
+        return result;
+      }, {});
+    }
+
+    function updateClock() {
+      const date = getCairoDateParts();
+      document.getElementById("dateDisplay").textContent = date.year + "-" + date.month + "-" + date.day;
+      document.getElementById("timeDisplay").textContent = date.hour + ":" + date.minute + ":" + date.second;
+    }
+
+    updateClock();
+    window.setInterval(updateClock, 1000);
+
+    // 2. Dropdowns Logic
+    function closeAllDropdowns() {
+      const userDrop = document.getElementById("userDropdown");
+      const searchDrop = document.getElementById("searchDropdown");
+      const notifDrop = document.getElementById("notifDropdown");
+      
+      if(userDrop) userDrop.classList.remove("active");
+      if(searchDrop) searchDrop.classList.remove("active");
+      if(notifDrop) notifDrop.classList.remove("active");
+    }
+
+    function toggleDropdown() {
+      const drop = document.getElementById("userDropdown");
+      const isActive = drop.classList.contains("active");
+      closeAllDropdowns();
+      if(!isActive) drop.classList.add("active");
+    }
+
+    function toggleSearch() {
+      const drop = document.getElementById("searchDropdown");
+      const isActive = drop.classList.contains("active");
+      closeAllDropdowns();
+      if(!isActive) drop.classList.add("active");
+    }
+
+    function toggleNotif() {
+      const drop = document.getElementById("notifDropdown");
+      const isActive = drop.classList.contains("active");
+      closeAllDropdowns();
+      if(!isActive) drop.classList.add("active");
+    }
+
+    document.addEventListener("click", function(event) {
+      const userBtn = document.getElementById("dropdownBtn");
+      const searchBtn = document.getElementById("searchBtn");
+      const notifBtn = document.getElementById("notifBtn");
+      
+      const userDrop = document.getElementById("userDropdown");
+      const searchDrop = document.getElementById("searchDropdown");
+      const notifDrop = document.getElementById("notifDropdown");
+
+      let clickedInsideDrop = false;
+      if(userDrop && userDrop.contains(event.target)) clickedInsideDrop = true;
+      if(searchDrop && searchDrop.contains(event.target)) clickedInsideDrop = true;
+      if(notifDrop && notifDrop.contains(event.target)) clickedInsideDrop = true;
+
+      let clickedBtn = false;
+      if(userBtn && userBtn.contains(event.target)) clickedBtn = true;
+      if(searchBtn && searchBtn.contains(event.target)) clickedBtn = true;
+      if(notifBtn && notifBtn.contains(event.target)) clickedBtn = true;
+
+      if(!clickedInsideDrop && !clickedBtn) {
+         closeAllDropdowns();
+      }
+    });
+  </script>
+</body>
+</html>
